@@ -1,0 +1,12 @@
+# openapi: 3.0.3
+# info:
+#   title: "Online chat API"
+#   description: "An API documentation for online chat"
+#   version: "1.0.0"
+
+# servers:
+#   - url: "https://chat-backend-0hoy.onrender.com"
+#     description: "Live server"
+# paths:
+# components:
+#   schemas:
