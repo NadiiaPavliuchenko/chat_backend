@@ -15,12 +15,15 @@ const chatsSchema = new mongoose.Schema(
       default: Date.now,
     },
     lastMessage: {
-      text: String,
-      sender: String,
-      createdAt: {
-        type: Date,
-        default: Date.now,
+      type: {
+        text: String,
+        sender: String,
+        createdAt: {
+          type: Date,
+          default: null,
+        },
       },
+      required: false,
     },
   },
   { versionKey: false }

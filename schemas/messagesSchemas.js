@@ -8,3 +8,7 @@ export const sendMessageSchema = Joi.object({
   chatId: Joi.objectId().required(),
   sender: Joi.string().required(),
 });
+
+export const editMessageSchema = Joi.object({
+  text: Joi.string().required(),
+});

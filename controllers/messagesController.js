@@ -17,3 +17,21 @@ export const sendMessage = async (req, res, next) => {
     next(e);
   }
 };
+
+export const editMessage = async (req, res, next) => {
+  try {
+    if (Object.keys(req.body).length === 0) {
+      throw HttpError(404, "Body should have at least one value");
+    }
+    const editedMessage = await messagesService.editMessage(
+      req.params.id,
+      req.body
+    );
+    if (!editedMessage) {
+      throw HttpError(404, "Not found");
+    }
+    res.send(editedMessage);
+  } catch (e) {
+    next(e);
+  }
+};
