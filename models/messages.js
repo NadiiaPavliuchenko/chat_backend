@@ -1,26 +1,29 @@
 import mongoose from "mongoose";
 
-const messagesSchema = new mongoose.Schema({
-  message: {
-    type: String,
-    required: true,
+const messagesSchema = new mongoose.Schema(
+  {
+    message: {
+      type: String,
+      required: true,
+    },
+    chat_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "chats",
+    },
+    author: {
+      type: String,
+      required: true,
+    },
+    sent_at: {
+      type: Date,
+      default: Date.now(),
+    },
+    updated_at: {
+      type: Date,
+      default: Date.now(),
+    },
   },
-  chat_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "chats",
-  },
-  author: {
-    type: String,
-    required: true,
-  },
-  sent_at: {
-    type: Date,
-    default: Date.now(),
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now(),
-  },
-});
+  { versionKey: false }
+);
 
 export const messages = mongoose.model("Messages", messagesSchema);

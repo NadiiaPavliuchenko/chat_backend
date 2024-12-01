@@ -8,3 +8,12 @@ export const getChats = async (req, res, next) => {
     next(e);
   }
 };
+
+export const createChat = async (req, res, next) => {
+  try {
+    const newChat = await chatsService.createChat(req.body);
+    res.status(201).send(newChat);
+  } catch (e) {
+    next(e);
+  }
+};

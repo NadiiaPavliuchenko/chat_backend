@@ -15,6 +15,7 @@ const usersSchema = new mongoose.Schema({
     unique: true,
   },
   avatarURL: String,
-});
+}
+{ versionKey: false });
 
 export const users = mongoose.model("Users", usersSchema);
