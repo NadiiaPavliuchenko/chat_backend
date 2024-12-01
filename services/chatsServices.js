@@ -1,13 +1,17 @@
 import { chats } from "../models/chats.js";
 
-const getChats = () => {
-  const chatsList = chats.find({});
-  chatsList.sort("-createdAt");
+const getChats = async () => {
+  const chatsList = await chats.find({});
+  chatsList.sort((a, b) => {
+    const dateA = a.lastMessage ? new Date(a.lastMessage.createdAt) : 0;
+    const dateB = b.lastMessage ? new Date(b.lastMessage.createdAt) : 0;
+    return dateB - dateA;
+  });
   return chatsList;
 };
 
-const createChat = ({ firstName, lastName }) => {
-  const newChat = chats.create({ firstName, lastName });
+const createChat = async ({ firstName, lastName }) => {
+  const newChat = await chats.create({ firstName, lastName });
   if (!newChat) {
     return null;
   } else {
@@ -15,8 +19,8 @@ const createChat = ({ firstName, lastName }) => {
   }
 };
 
-const updateChat = (id, { firstName, lastName }) => {
-  const updatedChat = chats.findByIdAndUpdate(
+const updateChat = async (id, { firstName, lastName }) => {
+  const updatedChat = await chats.findByIdAndUpdate(
     { _id: id },
     { firstName, lastName },
     { new: true }

@@ -7,6 +7,7 @@ import YAML from "yamljs";
 import SwaggerUI from "swagger-ui-express";
 
 import chatsRouter from "./routes/chatsRouter.js";
+import messagesRouter from "./routes/messagesRouter.js";
 
 const swaggerDocument = YAML.load("./swagger.yaml");
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/chats", chatsRouter);
+app.use("/api/messages", messagesRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });

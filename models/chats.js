@@ -14,6 +14,14 @@ const chatsSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    lastMessage: {
+      text: String,
+      sender: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
   },
   { versionKey: false }
 );
