@@ -8,3 +8,12 @@ export const getMessages = async (req, res, next) => {
     next(e);
   }
 };
+
+export const sendMessage = async (req, res, next) => {
+  try {
+    const newMessage = await messagesService.addMessage(req.body);
+    res.status(201).send(newMessage);
+  } catch (e) {
+    next(e);
+  }
+};

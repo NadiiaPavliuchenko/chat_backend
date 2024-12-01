@@ -5,4 +5,13 @@ const getMessages = async (id) => {
   return messagesList;
 };
 
-export default { getMessages };
+const addMessage = async ({ text, chatId, sender }) => {
+  const newMessage = await messages.create({ text, chatId, sender });
+  if (!newMessage) {
+    return null;
+  } else {
+    return newMessage;
+  }
+};
+
+export default { getMessages, addMessage };
