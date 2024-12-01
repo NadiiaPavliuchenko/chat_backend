@@ -40,4 +40,14 @@ const deleteChat = async (id) => {
   return deletedChat;
 };
 
-export default { getChats, createChat, updateChat, deleteChat };
+const searchChats = async ({ query }) => {
+  const foundChats = await chats.find({
+    $or: [
+      { firstName: { $regex: query, $options: "i" } },
+      { lastName: { $regex: query, $options: "i" } },
+    ],
+  });
+  return foundChats;
+};
+
+export default { getChats, createChat, updateChat, deleteChat, searchChats };
