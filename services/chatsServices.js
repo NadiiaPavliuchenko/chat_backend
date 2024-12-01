@@ -15,8 +15,12 @@ const createChat = ({ firstName, lastName }) => {
   }
 };
 
-const updateChat = ({ _id, firstName, lastName }) => {
-  const updatedChat = chats.findByIdAndUpdate(id, { firstName, lastName });
+const updateChat = (id, { firstName, lastName }) => {
+  const updatedChat = chats.findByIdAndUpdate(
+    { _id: id },
+    { firstName, lastName },
+    { new: true }
+  );
   if (!updatedChat) {
     return null;
   } else {
@@ -24,4 +28,12 @@ const updateChat = ({ _id, firstName, lastName }) => {
   }
 };
 
-export default { getChats, createChat };
+const deleteChat = async (id) => {
+  const deletedChat = await chats.findOneAndDelete({ _id: id });
+  if (deletedChat === null) {
+    return null;
+  }
+  return deletedChat;
+};
+
+export default { getChats, createChat, updateChat, deleteChat };
