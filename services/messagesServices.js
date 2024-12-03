@@ -3,6 +3,9 @@ import { chats } from "../models/chats.js";
 
 const getMessages = async (id) => {
   const messagesList = await messages.find({ chatId: id });
+  messagesList.sort((a, b) => {
+    return new Date(b.sentAt) - new Date(a.sentAt);
+  });
   return messagesList;
 };
 

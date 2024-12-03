@@ -45,12 +45,3 @@ export const deleteChat = async (req, res, next) => {
     next(e);
   }
 };
-
-export const searchChats = async (req, res, next) => {
-  try {
-    const foundChats = await chatsService.searchChats(req.query);
-    res.send(foundChats);
-  } catch (e) {
-    next(e);
-  }
-};
