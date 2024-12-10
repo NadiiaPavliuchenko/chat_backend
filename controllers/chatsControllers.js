@@ -10,6 +10,15 @@ export const getChats = async (req, res, next) => {
   }
 };
 
+export const getOneChat = async (req, res, next) => {
+  try {
+    const chat = await chatsService.getOneChat(req.params.id);
+    res.send(chat);
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const createChat = async (req, res, next) => {
   try {
     const newChat = await chatsService.createChat(req.body);

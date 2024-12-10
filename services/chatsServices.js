@@ -10,6 +10,11 @@ const getChats = async () => {
   return chatsList;
 };
 
+const getOneChat = async (id) => {
+  const chat = await chats.findOne({ _id: id });
+  return chat;
+};
+
 const createChat = async ({ firstName, lastName }) => {
   const newChat = await chats.create({ firstName, lastName });
   if (!newChat) {
@@ -40,4 +45,4 @@ const deleteChat = async (id) => {
   return deletedChat;
 };
 
-export default { getChats, createChat, updateChat, deleteChat };
+export default { getChats, getOneChat, createChat, updateChat, deleteChat };
