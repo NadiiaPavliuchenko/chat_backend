@@ -1,5 +1,6 @@
 import { messages } from "../models/messages.js";
 import { chats } from "../models/chats.js";
+import axios from "axios";
 
 const getMessages = async (id) => {
   const messagesList = await messages.find({ chatId: id });
@@ -42,4 +43,13 @@ const editMessage = async (id, { text }) => {
   }
 };
 
-export default { getMessages, addMessage, editMessage };
+const getReplyQuote = async () => {
+  try {
+    const resp = await axios.get("https://dummyjson.com/quotes/random");
+    return resp.data;
+  } catch (e) {
+    return e.message;
+  }
+};
+
+export default { getMessages, addMessage, editMessage, getReplyQuote };

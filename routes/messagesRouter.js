@@ -14,7 +14,6 @@ import validateBody from "../middlewares/validateBody.js";
 const messagesRouter = express.Router();
 
 messagesRouter.get("/:id", isValidId, getMessages);
-messagesRouter.post("/", validateBody(sendMessageSchema), sendMessage);
 messagesRouter.put(
   "/:id",
   isValidId,
