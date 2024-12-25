@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import { messages } from "./models/messages.js";
-import messagesServices from "./services/messagesServices.js";
+import { chats } from "./models/chats.js";
 
 export const initSocket = (server) => {
   const io = new Server(server, {
@@ -14,35 +14,29 @@ export const initSocket = (server) => {
 
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
-    let chatId;
 
     socket.on("sendMessage", async (messageData) => {
       try {
         const newMessage = await messages.create(messageData);
-        chatId = messageData.chatId;
-        io.to(chatId).emit("newMessage", newMessage);
-
-        setTimeout(async () => {
-          try {
-            const replyText = await messagesServices.getReplyQuote();
-
-            const replyData = {
-              text: replyText.quote,
-              sender: "bot",
-              chatId: chatId,
-              sentAt: new Date(),
-            };
-
-            const replyMessage = await messages.create(replyData);
-            io.to(chatId).emit("getReply", replyMessage);
-          } catch (e) {
-            console.error(e);
-          }
-        }, 3000);
+        io.to(messageData.chatId).emit("newMessage", newMessage);
       } catch (e) {
         console.error(e.message);
       }
     });
+
+    socket.on("getLastMessage", async (chatId) => {
+      try {
+        console.log(chatId);
+        const lastMessageInChat = await messages
+          .find({ chatId })
+          .sort({ sentAt: -1 })
+          .limit(1);
+        socket.emit("lastMessage", lastMessageInChat);
+      } catch (e) {
+        console.error("Error while getting last message:", e);
+      }
+    });
+
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
     });
