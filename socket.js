@@ -26,11 +26,10 @@ export const initSocket = (server) => {
 
     socket.on("getLastMessage", async (chatId) => {
       try {
-        console.log(chatId);
         const lastMessageInChat = await messages
-          .find({ chatId })
-          .sort({ sentAt: -1 })
-          .limit(1);
+          .findOne({ chatId })
+          .sort({ sentAt: -1 });
+
         socket.emit("lastMessage", lastMessageInChat);
       } catch (e) {
         console.error("Error while getting last message:", e);
