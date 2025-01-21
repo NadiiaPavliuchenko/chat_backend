@@ -22,6 +22,10 @@ const messagesSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    isRead: {
+      type: Boolean,
+      default: false,
+    },
   },
   { versionKey: false }
 );

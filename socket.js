@@ -36,6 +36,19 @@ export const initSocket = (server) => {
       }
     });
 
+    socket.on("markIsRead", async ({ messageId, isRead }) => {
+      try {
+        const readMessage = await messages.findByIdAndUpdate(
+          { _id: messageId },
+          { isRead }
+        );
+        io.to(readMessage.chatId).emit("readMessage", readMessage);
+        console.log("read", readMessage);
+      } catch (e) {
+        console.error("Error while marking message as read:", e.message);
+      }
+    });
+
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
     });
